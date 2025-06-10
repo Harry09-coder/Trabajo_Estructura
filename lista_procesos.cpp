@@ -51,13 +51,45 @@ struct GestorMemoria {
 
 //Coloquen las funciones en orden , yo ordenares en el menu
 //Yoset la parte de Gestor de procesos
-void inicializarGestor(GestorProcesos* gp);
-void agregarProceso(GestorProcesos* gp);
-void mostrarProcesos(GestorProcesos* gp);
-NodoLista* buscarPorID(GestorProcesos* gp, int id);
-NodoLista* buscarPorNombre(GestorProcesos* gp, const string& nombre);
-void eliminarProceso(GestorProcesos* gp, int id);
-void modificarPrioridad(GestorProcesos* gp, int id);
+void limpiarConsola() {
+    system("cls");
+}
+
+int validarPrioridad() {
+    int prioridad;
+    cin >> prioridad;
+    while (prioridad < 0 || prioridad > 2) {
+        cout << "Dato no válido (0=Baja, 1=Media, 2=Alta). Intente de nuevo: ";
+        cin >> prioridad;
+    }
+    return prioridad;
+}
+
+int validarMemoria() {
+    int memoria;
+    cin >> memoria;
+    while (memoria < 0) {
+        cout << "No se puede ingresar memoria negativa. Intente de nuevo: ";
+        cin >> memoria;
+    }
+    return memoria;
+}
+
+string obtenerNombrePrioridad(int prioridad) {
+    switch(prioridad) {
+        case 0: return "Baja";
+        case 1: return "Media";
+        case 2: return "Alta";
+        default: return "Desconocida";
+    }
+}
+
+void pausar() {
+    cout << "\nPresione Enter para continuar...";
+    cin.ignore();
+    cin.get();
+}
+
 
 // Prototipos de funciones del Planificador de CPU
 void inicializarPlanificador(PlanificadorCPU* pc);
