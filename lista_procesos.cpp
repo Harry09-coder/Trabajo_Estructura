@@ -165,7 +165,11 @@ Proceso desencolarProceso(PlanificadorCPU* pc);
 void mostrarCola(PlanificadorCPU* pc);
 bool estaVacia(PlanificadorCPU* pc);
 //Gestor de Memoria Anderson 
-
+// Prototipos de funciones del Gestor de Memoria
+void inicializarGestorMemoria(GestorMemoria* gm, int total);
+bool asignarMemoria(GestorMemoria* gm, int tamano, int id_proceso);
+bool liberarMemoria(GestorMemoria* gm);
+void mostrarEstadoMemoria(GestorMemoria* gm);
 
 int main(){
   system("color F0"); 
