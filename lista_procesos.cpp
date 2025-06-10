@@ -1,4 +1,5 @@
 #include <iostream>
+#include <windows.h> 
 using namespace std;
 
 //Funciones prototipo
@@ -17,7 +18,9 @@ bool estaVacia(PlanificadorCPU* pc);
 
 
 int main(){
-  
+  system("color F0"); 
+  SetConsoleTitle("Administrador de Procesos");
+  setlocale(LC_CTYPE,"Spanish");
 return 0;
 };
 
