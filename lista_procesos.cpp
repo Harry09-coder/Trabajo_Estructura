@@ -150,6 +150,14 @@ void mostrarProcesos(GestorProcesos* gp) {
     }
     cout << "-------------------------\n";
 }
+void mostrarMenu() {
+    cout << "\n=== Sistema de Gestión de Procesos ===\n";
+    cout << "1. Gestor de Procesos\n";
+    cout << "2. Planificador de CPU\n";
+    cout << "3. Gestor de Memoria\n";
+    cout << "4. Salir\n";
+    cout << "Seleccione una opción: ";
+}
 // Prototipos de funciones del Planificador de CPU
 void inicializarPlanificador(PlanificadorCPU* pc);
 void encolarProceso(PlanificadorCPU* pc, Proceso p);
