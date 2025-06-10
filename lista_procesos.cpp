@@ -150,8 +150,6 @@ void mostrarProcesos(GestorProcesos* gp) {
     }
     cout << "-------------------------\n";
 }
-
-
 // Prototipos de funciones del Planificador de CPU
 void inicializarPlanificador(PlanificadorCPU* pc);
 void encolarProceso(PlanificadorCPU* pc, Proceso p);
