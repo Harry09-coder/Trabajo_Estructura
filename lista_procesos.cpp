@@ -60,7 +60,6 @@ void mostrarMenu() {
 }
 
 //Yoset la parte de Gestor de procesos
-// Implementación de funciones del Gestor de Procesos
 void inicializarGestor(GestorProcesos* gp) {
     gp->cabeza = NULL;
     gp->contador_id = 1;
