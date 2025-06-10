@@ -3,38 +3,45 @@
 
 using namespace std;
 
+// Estructura que representa un proceso en la lista enlazada
 struct Proceso {
-    int id;
-    std::string nombre;
-    int prioridad;
-    Proceso* siguiente;
+    int id;                // Identificador único del proceso
+    std::string nombre;    // Nombre del proceso
+    int prioridad;         // Prioridad del proceso
+    Proceso* siguiente;    // Puntero al siguiente proceso en la lista
 };
 
+// Clase para gestionar una lista enlazada de procesos
 class GestorProcesos {
 private:
-    Proceso* cabeza;
-    int contador;
+    Proceso* cabeza;   // Puntero al primer proceso de la lista
+    int contador;      // Contador para asignar IDs únicos
 
 public:
+    // Constructor: inicializa lista vacía y contador en 0
     GestorProcesos() {
         cabeza = NULL;
         contador = 0;
     }
 
+    // Inserta un nuevo proceso al inicio de la lista
     void insertarProceso(const string& nombre, int prioridad) {
         Proceso* nuevo = new Proceso;
-        nuevo->id = ++contador;
+        nuevo->id = ++contador;          // Asigna ID único
         nuevo->nombre = nombre;
         nuevo->prioridad = prioridad;
-        nuevo->siguiente = cabeza;
+        nuevo->siguiente = cabeza;       // Inserta al inicio
         cabeza = nuevo;
+
         cout << "Proceso insertado: " << nombre << " (ID: " << nuevo->id << ", Prioridad: " << prioridad << ")\n";
     }
 
+    // Elimina un proceso por su ID
     void eliminarProceso(int id) {
         Proceso* actual = cabeza;
         Proceso* anterior = NULL;
 
+        // Recorre la lista buscando el proceso por ID
         while (actual != NULL && actual->id != id) {
             anterior = actual;
             actual = actual->siguiente;
@@ -45,6 +52,7 @@ public:
             return;
         }
 
+        // Reenlaza los nodos para eliminar el proceso
         if (anterior == NULL)
             cabeza = actual->siguiente;
         else
@@ -54,6 +62,7 @@ public:
         cout << "Proceso eliminado.\n";
     }
 
+    // Busca un proceso por su ID
     Proceso* buscarPorID(int id) {
         Proceso* actual = cabeza;
         while (actual != NULL) {
@@ -64,6 +73,7 @@ public:
         return NULL;
     }
 
+    // Busca un proceso por su nombre
     Proceso* buscarPorNombre(const string& nombre) {
         Proceso* actual = cabeza;
         while (actual != NULL) {
@@ -74,6 +84,7 @@ public:
         return NULL;
     }
 
+    // Modifica la prioridad de un proceso dado su ID
     void modificarPrioridad(int id, int nuevaPrioridad) {
         Proceso* p = buscarPorID(id);
         if (p) {
@@ -84,20 +95,29 @@ public:
         }
     }
 
+    // Muestra todos los procesos en la lista
     void listarProcesos() {
         Proceso* actual = cabeza;
+        if (actual == NULL) {
+            cout << "No hay procesos registrados.\n";
+            return;
+        }
         while (actual != NULL) {
-            cout << "ID: " << actual->id << ", Nombre: " << actual->nombre << ", Prioridad: " << actual->prioridad << "\n";
+            cout << "ID: " << actual->id 
+                 << ", Nombre: " << actual->nombre 
+                 << ", Prioridad: " << actual->prioridad << "\n";
             actual = actual->siguiente;
         }
     }
 };
 
+// Función principal con menú de usuario
 int main() {
     GestorProcesos gestor;
     int opcion;
 
     do {
+        // Menú de opciones
         cout << "\n===== MENU DE GESTION DE PROCESOS =====\n";
         cout << "1. Insertar proceso\n";
         cout << "2. Eliminar proceso\n";
@@ -114,7 +134,7 @@ int main() {
                 string nombre;
                 int prioridad;
                 cout << "Ingrese nombre del proceso: ";
-                cin.ignore(); // Limpiar buffer
+                cin.ignore(); // Limpia el buffer de entrada
                 getline(cin, nombre);
                 cout << "Ingrese prioridad del proceso: ";
                 cin >> prioridad;
@@ -143,7 +163,7 @@ int main() {
             case 4: {
                 string nombre;
                 cout << "Ingrese nombre del proceso a buscar: ";
-                cin.ignore(); // Limpiar buffer
+                cin.ignore(); // Limpia el buffer
                 getline(cin, nombre);
                 Proceso* p = gestor.buscarPorNombre(nombre);
                 if (p) {
@@ -176,3 +196,4 @@ int main() {
 
     return 0;
 }
+
