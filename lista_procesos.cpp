@@ -78,3 +78,60 @@ void mostrarMenu() {
     cout << "4. Salir\n";
     cout << "Seleccione una opción: ";
 }
+
+
+
+// Implementación de funciones del Planificador de CPU
+void inicializarPlanificador(PlanificadorCPU* pc) {
+    pc->frente = NULL;
+}
+
+void encolarProceso(PlanificadorCPU* pc, Proceso p) {
+    NodoCola* nuevoNodo = new NodoCola;
+    nuevoNodo->proceso = p;
+    nuevoNodo->siguiente = NULL;
+    
+    if (!pc->frente || p.prioridad > pc->frente->proceso.prioridad) {
+        nuevoNodo->siguiente = pc->frente;
+        pc->frente = nuevoNodo;
+    } else {
+        NodoCola* actual = pc->frente;
+        while (actual->siguiente && actual->siguiente->proceso.prioridad >= p.prioridad) {
+            actual = actual->siguiente;
+        }
+        nuevoNodo->siguiente = actual->siguiente;
+        actual->siguiente = nuevoNodo;
+    }
+}
+
+Proceso desencolarProceso(PlanificadorCPU* pc) {
+    Proceso resultado;
+    resultado.id = -1;
+    
+    if (pc->frente) {
+        NodoCola* temp = pc->frente;
+        resultado = pc->frente->proceso;
+        pc->frente = pc->frente->siguiente;
+        delete temp;
+    }
+    
+    return resultado;
+}
+
+void mostrarCola(PlanificadorCPU* pc) {
+    limpiarConsola();
+    NodoCola* actual = pc->frente;
+    cout << "\n--- Cola de Procesos (Prioridad) ---\n";
+    while (actual) {
+        cout << "ID: " << actual->proceso.id 
+             << ", Nombre: " << actual->proceso.nombre 
+             << ", Prioridad: " << obtenerNombrePrioridad(actual->proceso.prioridad)
+             << ", Memoria: " << actual->proceso.memoria << "MB\n";
+        actual = actual->siguiente;
+    }
+    cout << "-----------------------------------\n";
+}
+
+bool estaVacia(PlanificadorCPU* pc) {
+    return pc->frente == NULL;
+}
