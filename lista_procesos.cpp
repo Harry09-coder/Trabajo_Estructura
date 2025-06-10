@@ -50,6 +50,15 @@ struct GestorMemoria {
 };
 
 //Coloquen las funciones en orden , yo ordenares en el menu
+void mostrarMenu() {
+    cout << "\n=== Sistema de Gestión de Procesos ===\n";
+    cout << "1. Gestor de Procesos\n";
+    cout << "2. Planificador de CPU\n";
+    cout << "3. Gestor de Memoria\n";
+    cout << "4. Salir\n";
+    cout << "Seleccione una opción: ";
+}
+
 //Yoset la parte de Gestor de procesos
 // Implementación de funciones del Gestor de Procesos
 void inicializarGestor(GestorProcesos* gp) {
@@ -147,14 +156,6 @@ void mostrarProcesos(GestorProcesos* gp) {
         actual = actual->siguiente;
     }
     cout << "-------------------------\n";
-}
-void mostrarMenu() {
-    cout << "\n=== Sistema de Gestión de Procesos ===\n";
-    cout << "1. Gestor de Procesos\n";
-    cout << "2. Planificador de CPU\n";
-    cout << "3. Gestor de Memoria\n";
-    cout << "4. Salir\n";
-    cout << "Seleccione una opción: ";
 }
 
 
