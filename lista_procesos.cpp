@@ -51,46 +51,102 @@ struct GestorMemoria {
 
 //Coloquen las funciones en orden , yo ordenares en el menu
 //Yoset la parte de Gestor de procesos
-void limpiarConsola() {
-    system("cls");
+void inicializarGestor(GestorProcesos* gp) {
+    gp->cabeza = NULL;
+    gp->contador_id = 1;
 }
 
-int validarPrioridad() {
-    int prioridad;
-    cin >> prioridad;
-    while (prioridad < 0 || prioridad > 2) {
-        cout << "Dato no válido (0=Baja, 1=Media, 2=Alta). Intente de nuevo: ";
-        cin >> prioridad;
-    }
-    return prioridad;
-}
-
-int validarMemoria() {
-    int memoria;
-    cin >> memoria;
-    while (memoria < 0) {
-        cout << "No se puede ingresar memoria negativa. Intente de nuevo: ";
-        cin >> memoria;
-    }
-    return memoria;
-}
-
-string obtenerNombrePrioridad(int prioridad) {
-    switch(prioridad) {
-        case 0: return "Baja";
-        case 1: return "Media";
-        case 2: return "Alta";
-        default: return "Desconocida";
+void insertarProceso(GestorProcesos* gp, string nombre, int prioridad, int memoria) {
+    Proceso nuevo;
+    nuevo.id = gp->contador_id++;
+    nuevo.nombre = nombre;
+    nuevo.prioridad = prioridad;
+    nuevo.memoria = memoria;
+    
+    NodoLista* nuevoNodo = new NodoLista;
+    nuevoNodo->proceso = nuevo;
+    nuevoNodo->siguiente = NULL;
+    
+    if (!gp->cabeza) {
+        gp->cabeza = nuevoNodo;
+    } else {
+        NodoLista* actual = gp->cabeza;
+        while (actual->siguiente) {
+            actual = actual->siguiente;
+        }
+        actual->siguiente = nuevoNodo;
     }
 }
 
-void pausar() {
-    cout << "\nPresione Enter para continuar...";
-    cin.ignore();
-    cin.get();
+bool eliminarProceso(GestorProcesos* gp, int id) {
+    if (!gp->cabeza) return false;
+    
+    if (gp->cabeza->proceso.id == id) {
+        NodoLista* temp = gp->cabeza;
+        gp->cabeza = gp->cabeza->siguiente;
+        delete temp;
+        return true;
+    }
+    
+    NodoLista* actual = gp->cabeza;
+    while (actual->siguiente && actual->siguiente->proceso.id != id) {
+        actual = actual->siguiente;
+    }
+    
+    if (actual->siguiente) {
+        NodoLista* temp = actual->siguiente;
+        actual->siguiente = actual->siguiente->siguiente;
+        delete temp;
+        return true;
+    }
+    
+    return false;
 }
 
+Proceso* buscarPorId(GestorProcesos* gp, int id) {
+    NodoLista* actual = gp->cabeza;
+    while (actual) {
+        if (actual->proceso.id == id) {
+            return &(actual->proceso);
+        }
+        actual = actual->siguiente;
+    }
+    return NULL;
+}
 
+Proceso* buscarPorNombre(GestorProcesos* gp, string nombre) {
+    NodoLista* actual = gp->cabeza;
+    while (actual) {
+        if (actual->proceso.nombre == nombre) {
+            return &(actual->proceso);
+        }
+        actual = actual->siguiente;
+    }
+    return NULL;
+}
+
+bool modificarPrioridad(GestorProcesos* gp, int id, int nuevaPrioridad) {
+    Proceso* proc = buscarPorId(gp, id);
+    if (proc) {
+        proc->prioridad = nuevaPrioridad;
+        return true;
+    }
+    return false;
+}
+
+void mostrarProcesos(GestorProcesos* gp) {
+    limpiarConsola();
+    NodoLista* actual = gp->cabeza;
+    cout << "\n--- Lista de Procesos ---\n";
+    while (actual) {
+        cout << "ID: " << actual->proceso.id 
+             << ", Nombre: " << actual->proceso.nombre 
+             << ", Prioridad: " << obtenerNombrePrioridad(actual->proceso.prioridad)
+             << ", Memoria: " << actual->proceso.memoria << "MB\n";
+        actual = actual->siguiente;
+    }
+    cout << "-------------------------\n";
+}
 // Prototipos de funciones del Planificador de CPU
 void inicializarPlanificador(PlanificadorCPU* pc);
 void encolarProceso(PlanificadorCPU* pc, Proceso p);
