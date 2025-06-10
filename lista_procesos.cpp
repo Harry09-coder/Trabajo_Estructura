@@ -7,8 +7,12 @@ using namespace std;
 //Coloquen las funciones en orden , yo ordenares en el menu
 //Yoset la parte de Gestor de procesos
 
-//Planificardo de CPU HARRY
-
+// Prototipos de funciones del Planificador de CPU
+void inicializarPlanificador(PlanificadorCPU* pc);
+void encolarProceso(PlanificadorCPU* pc, Proceso p);
+Proceso desencolarProceso(PlanificadorCPU* pc);
+void mostrarCola(PlanificadorCPU* pc);
+bool estaVacia(PlanificadorCPU* pc);
 //Gestor de Memoria Anderson 
 
 
