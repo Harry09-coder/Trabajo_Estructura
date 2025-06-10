@@ -4,7 +4,26 @@ using namespace std;
 //Funciones prototipo
 
 
+//Coloquen las funciones en orden , yo ordenares en el menu
+//Yoset la parte de Gestor de procesos
+
+//Planificardo de CPU HARRY
+
+//Gestor de Memoria Anderson 
+
+
 int main(){
   
 return 0;
 };
+
+//Colocar a aqui las funciones
+
+void mostrarMenu() {
+    cout << "\n=== Sistema de Gestión de Procesos ===\n";
+    cout << "1. Gestor de Procesos\n";
+    cout << "2. Planificador de CPU\n";
+    cout << "3. Gestor de Memoria\n";
+    cout << "4. Salir\n";
+    cout << "Seleccione una opción: ";
+}
