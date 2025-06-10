@@ -51,6 +51,13 @@ struct GestorMemoria {
 
 //Coloquen las funciones en orden , yo ordenares en el menu
 //Yoset la parte de Gestor de procesos
+void inicializarGestor(GestorProcesos* gp);
+void agregarProceso(GestorProcesos* gp);
+void mostrarProcesos(GestorProcesos* gp);
+NodoLista* buscarPorID(GestorProcesos* gp, int id);
+NodoLista* buscarPorNombre(GestorProcesos* gp, const string& nombre);
+void eliminarProceso(GestorProcesos* gp, int id);
+void modificarPrioridad(GestorProcesos* gp, int id);
 
 // Prototipos de funciones del Planificador de CPU
 void inicializarPlanificador(PlanificadorCPU* pc);
