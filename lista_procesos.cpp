@@ -3,7 +3,51 @@
 using namespace std;
 
 //Funciones prototipo
+// Prototipos de funciones generales
+void limpiarConsola();
+int validarPrioridad();
+int validarMemoria();
+string obtenerNombrePrioridad(int prioridad);
+void pausar();
 
+// Estructuras de datos
+struct Proceso {
+    int id;
+    string nombre;
+    int prioridad; // 0=Baja, 1=Media, 2=Alta
+    int memoria;
+};
+
+struct NodoLista {
+    Proceso proceso;
+    NodoLista* siguiente;
+};
+
+struct GestorProcesos {
+    NodoLista* cabeza;
+    int contador_id;
+};
+
+struct NodoCola {
+    Proceso proceso;
+    NodoCola* siguiente;
+};
+
+struct PlanificadorCPU {
+    NodoCola* frente;
+};
+
+struct NodoPila {
+    int tamano;
+    int id_proceso;
+    NodoPila* siguiente;
+};
+
+struct GestorMemoria {
+    NodoPila* tope;
+    int memoria_total;
+    int memoria_disponible;
+};
 
 //Coloquen las funciones en orden , yo ordenares en el menu
 //Yoset la parte de Gestor de procesos
