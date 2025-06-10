@@ -171,6 +171,70 @@ bool asignarMemoria(GestorMemoria* gm, int tamano, int id_proceso);
 bool liberarMemoria(GestorMemoria* gm);
 void mostrarEstadoMemoria(GestorMemoria* gm);
 
+// Inicializa el gestor con la memoria total disponible
+void inicializarGestorMemoria(GestorMemoria* gm, int total) {
+    gm->memoria_total = total;
+    gm->memoria_disponible = total;
+    gm->tope = NULL;
+}
+
+// Asigna memoria a un proceso (push en la pila)
+bool asignarMemoria(GestorMemoria* gm, int tamano, int id_proceso) {
+    if (tamano > gm->memoria_disponible) {
+        cout << "No hay suficiente memoria disponible.\n";
+        return false;
+    }
+
+    NodoPila* nuevo = new NodoPila;
+    nuevo->tamano = tamano;
+    nuevo->id_proceso = id_proceso;
+    nuevo->siguiente = gm->tope;
+    gm->tope = nuevo;
+
+    gm->memoria_disponible -= tamano;
+    return true;
+}
+
+// Libera la memoria del último proceso agregado (pop en la pila)
+bool liberarMemoria(GestorMemoria* gm) {
+    if (!gm->tope) {
+        cout << "No hay bloques de memoria para liberar.\n";
+        return false;
+    }
+
+    NodoPila* temp = gm->tope;
+    gm->memoria_disponible += temp->tamano;
+    gm->tope = gm->tope->siguiente;
+
+    cout << "Memoria liberada del proceso ID: " << temp->id_proceso 
+         << ", Tamaño: " << temp->tamano << "MB\n";
+
+    delete temp;
+    return true;
+}
+
+// Muestra el estado actual de la memoria
+void mostrarEstadoMemoria(GestorMemoria* gm) {
+    limpiarConsola();
+    cout << "\n--- Estado Actual de la Memoria ---\n";
+    cout << "Memoria Total: " << gm->memoria_total << "MB\n";
+    cout << "Memoria Disponible: " << gm->memoria_disponible << "MB\n";
+    cout << "Bloques asignados:\n";
+
+    NodoPila* actual = gm->tope;
+    while (actual) {
+        cout << "Proceso ID: " << actual->id_proceso 
+             << ", Tamaño: " << actual->tamano << "MB\n";
+        actual = actual->siguiente;
+    }
+
+    if (!gm->tope)
+        cout << "No hay bloques asignados actualmente.\n";
+
+    cout << "-----------------------------------\n";
+}
+
+
 int main(){
   system("color F0"); 
   SetConsoleTitle("Administrador de Procesos");
